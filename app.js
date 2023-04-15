@@ -85,5 +85,18 @@ app.delete('/todo/:id', async (req, res) => {
     }
 });
 
+app.get('/todo', async (req, res) => {
+    try {
+        const todo = await Todo.find({});
+        if (!todo) {
+            return res.status(404).send('Todo not found');
+        }
+        res.send(todo);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Error retrieving todo');
+    }
+});
+
 // Start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
